@@ -1,6 +1,8 @@
 const fs = require("fs");
 const crypto = require("crypto");
+const util = require("util");
 
+const scrypt = util.promisify(crypto.scrypt);
 class UsersRepository {
   constructor(filename) {
     if (!filename) {
@@ -23,15 +25,24 @@ class UsersRepository {
       })
     );
   }
+
   async create(attrs) {
     attrs.id = this.randomID();
+
+    const salt = crypto.randomBytes(8).toString("hex"); //generates salt
+
+    const buf = await scrypt(attrs.password, salt, 64); //generates hashed pass
     //gets most recent records
     const records = await this.getAll();
     //pushes new data
-    records.push(attrs);
+    const record = { ...attrs, password: `${buf.toString("hex")}.${salt}` };
+    records.push(record);
     //write it back to the file
     await this.writeAll(records);
+
+    return record;
   }
+
   async writeAll(records) {
     await fs.promises.writeFile(
       this.filename,
@@ -51,7 +62,6 @@ class UsersRepository {
     const records = await this.getAll();
     const filteredRecords = records.filter(record => record.id !== id);
     await this.writeAll(filteredRecords);
-    console.log("user deleted");
   }
   async update(id, attrs) {
     const records = await this.getAll();
