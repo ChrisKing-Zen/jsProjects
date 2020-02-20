@@ -1,5 +1,5 @@
 const express = require("express");
-const { check, validationResult } = require("express-validator");
+const { handleErrors } = require("./middleware");
 
 const usersRepo = require("../../repositories/users");
 const signUpTemplate = require("../../views/admin/auth/signup.js");
@@ -21,20 +21,14 @@ router.get("/signup", (req, res) => {
 router.post(
   "/signup",
   [requireEmail, requirePassword, requirePasswordMatch],
+  handleErrors(signUpTemplate),
   async (req, res) => {
-    const { email, password, passwordConf } = req.body;
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      console.log(errors);
-      return res.send(signUpTemplate({ req, errors }));
-    }
-
+    const { email, password } = req.body;
     const user = await usersRepo.create({ email, password });
 
     req.session.userId = user.id;
 
-    res.send("Account created");
+    res.redirect("/admin/products");
   }
 );
 
@@ -50,20 +44,15 @@ router.get("/signin", async (req, res) => {
 router.post(
   "/signin",
   [requireEmailExists, requireCorrectPassword],
+  handleErrors(signInTemplate),
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log(errors);
-      return res.send(signInTemplate({ errors }));
-    }
-
     const { email } = req.body;
 
     const user = await usersRepo.getOneBy({ email });
 
     req.session.userId = user.id; //gives them cookie
 
-    res.send(`You're signed in!`);
+    res.redirect("/admin/products");
   }
 );
 

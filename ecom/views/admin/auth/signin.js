@@ -22,6 +22,8 @@ module.exports = ({ errors }) => {
               <button class="button is-primary">Submit</button>
             </form>
             <a href="/signup">Need an account? Sign Up</a>
+
+            <p> test@mail.com 12345 </p>
           </div>
         </div>
       </div>
