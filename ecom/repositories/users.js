@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const util = require("util");
 
 const scrypt = util.promisify(crypto.scrypt);
+
 class UsersRepository {
   constructor(filename) {
     if (!filename) {
@@ -18,7 +19,6 @@ class UsersRepository {
     }
   }
   async getAll() {
-    //open file
     return JSON.parse(
       await fs.promises.readFile(this.filename, {
         encoding: "utf8"
@@ -71,6 +71,12 @@ class UsersRepository {
     }
     Object.assign(record, attrs);
     await this.writeAll(records);
+  }
+
+  async comparePassword(saved, supplied) {
+    const [hashed, salt] = saved.split(".");
+    const hashedSuppliedBuf = await scrypt(supplied, salt, 64);
+    return hashed === hashedSuppliedBuf.toString("hex");
   }
   //GET ONEBY
   async getOneBy(filters) {
