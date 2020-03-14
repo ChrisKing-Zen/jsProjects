@@ -1,26 +1,19 @@
-const http = require("http");
-const url = require("url");
-const fs = require("fs");
 const path = require("path");
-
+const express = require("express");
+const app = express();
 const PORT = 4000;
+const pathParse = file => {
+  return path.join(__dirname + `/pages/${file}.html`);
+};
 
-http
-  .createServer((req, res) => {
-    var q = url.parse(req.url, true);
-    var filename = q.pathname;
-    fs.readFile(`./pages${filename}.html`, function(err, data) {
-      if (err) {
-        fs.readFile("./pages/404.html", function(err, data) {
-          res.writeHead(200, { "Content-Type": "text/html" });
-          res.write(data);
-          return res.end();
-        });
-      } else {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.write(data);
-        return res.end();
-      }
-    });
-  })
-  .listen(PORT);
+app.get("/", (req, res) => {
+  res.sendFile(pathParse("index"));
+});
+app.get("/about", (req, res) => {
+  res.sendFile(pathParse("about"));
+});
+app.get("/contact", (req, res) => {
+  res.sendFile(pathParse("contact-me"));
+});
+
+app.listen(PORT);
