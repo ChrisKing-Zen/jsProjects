@@ -1,18 +1,21 @@
+//node-modules
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var app = express();
+//routers
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-
-var app = express();
+var wikiRouter = require("./routes/wiki");
+var catalogRouter = require("./routes/catalog");
 
 //Set up mongoose connection
 var mongoose = require("mongoose");
 var mongoDB =
-  "mongodb+srv://Morzaram:<hello123>@cluster0-7ycek.azure.mongodb.net/local_library?retryWrites=true&w=majority";
+  "mongodb+srv://Morzaram:va6LnpelMevmPr9V@cluster0-7ycek.azure.mongodb.net/local_library?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -27,8 +30,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+//Router assignment
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/wiki", wikiRouter);
+app.use("/catalog", catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

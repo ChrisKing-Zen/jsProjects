@@ -20,7 +20,7 @@ var BookInstance = require("./models/bookinstance");
 
 var mongoose = require("mongoose");
 var mongoDB =
-  "mongodb+srv://Bobby:XhRRi3en1F6EWj1A@cluster0-7ycek.azure.mongodb.net/LocalLibrary?retryWrites=true&w=majority";
+  "mongodb+srv://Morzaram:va6LnpelMevmPr9V@cluster0-7ycek.azure.mongodb.net/local_library?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -86,8 +86,8 @@ function bookCreate(title, summary, isbn, author, genre, cb) {
 
 function bookInstanceCreate(book, imprint, due_back, status, cb) {
   bookinstancedetail = {
-    book: book,
-    imprint: imprint
+    book,
+    imprint
   };
   if (due_back != false) bookinstancedetail.due_back = due_back;
   if (status != false) bookinstancedetail.status = status;
