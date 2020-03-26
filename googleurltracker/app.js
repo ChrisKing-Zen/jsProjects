@@ -6,7 +6,9 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const googleurl = require('./app/googleurl');
+const gURL = require('./routes/googleURLroute');
+
+// const googleurl = require('./app/googleurl');
 
 const app = express();
 
@@ -26,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/google', gURL);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
@@ -44,5 +46,5 @@ app.use((err, req, res, next) => {
   next();
 });
 
-googleurl.processUrl();
+// googleurl.processUrl();
 module.exports = app;

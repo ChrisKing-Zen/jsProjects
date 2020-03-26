@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const axios = require('axios').default;
 const moment = require('moment');
-const GoogleURL = require('../models/googleURL');
+const GoogleURL = require('../models/googleURLModel');
 // GET request for remote image
 
 const encryptURL = (url) => {
