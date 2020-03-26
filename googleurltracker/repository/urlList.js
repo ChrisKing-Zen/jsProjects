@@ -1,23 +1,22 @@
-const fs = require("fs");
-const crypto = require("crypto");
-const util = require("util");
-const Repository = require("./repository");
+// Set up mongoose connection
 
-class URLRepository extends Repository {
-  async create(attrs) {
-    // const salt = crypto.randomBytes(8).toString("hex"); //generates salt
+const GoogleURL = require('../models/googleURL');
 
-    // const buf = await scrypt(attrs.password, salt, 64); //generates hashed pass
-    //gets most recent records
-    const records = await this.getAll();
-    //pushes new data
-    const record = { ...attrs };
-    await records.push(record);
-    //write it back to the file
-    await this.writeAll(records);
+const encryptURL = (url) => {
+  const encryptedURL = `${url}`;
+  return encryptedURL;
+};
 
-    return record;
-  }
-}
-
-module.exports = new URLRepository("urlList.json");
+const googleURLCreate = (reqURL, resURL, linked) => {
+  const googleURLdetail = {
+    reqURL: encryptURL(reqURL),
+    resURL: encryptURL(resURL),
+    linked,
+  };
+  const googleURLinstance = new GoogleURL(googleURLdetail);
+  googleURLinstance.save((err) => {
+    if (err) {
+      console.log(`ERROR CREATING googleURLinstance: ${googleURLinstance}`);
+    }
+  });
+};
