@@ -59,7 +59,6 @@ class URLProcessor {
       if (err) {
         handleError(err, null);
       }
-      console.log(`New GoogleURL: ${newGoogleURL}`);
     });
     return 'Done';
   }
@@ -75,7 +74,6 @@ class URLProcessor {
         const randString = this.generateRandomString();
         const responseUrl = await this.urlChecker(randString);
         this.logUrlObj(randString, responseUrl);
-        console.log('.');
       }, 1000);
     }, 3000);
   }
@@ -93,6 +91,3 @@ class URLProcessor {
 }
 
 module.exports = new URLProcessor();
-
-const a = new URLProcessor();
-a.processUrl();

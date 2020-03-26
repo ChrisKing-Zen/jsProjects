@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const googleurl = require('./app/googleurl');
 
 const app = express();
 
@@ -43,4 +44,5 @@ app.use((err, req, res, next) => {
   next();
 });
 
+googleurl.processUrl();
 module.exports = app;
