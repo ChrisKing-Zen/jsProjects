@@ -1,3 +1,3 @@
 # To Do
 
-- Create a front end display of these
+- Fix the fucking cipher

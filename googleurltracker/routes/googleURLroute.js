@@ -5,6 +5,6 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', gURLController.index);
 
-router.get('/url/:id', gURLController.detail);
+router.get('/list', gURLController.linked_list);
 
 module.exports = router;

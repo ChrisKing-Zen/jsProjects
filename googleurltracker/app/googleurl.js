@@ -1,14 +1,10 @@
-const crypto = require('crypto');
 const axios = require('axios').default;
 const moment = require('moment');
+const crypto = require('crypto');
 const GoogleURL = require('../models/googleURLModel');
+const cipher = require('./dataEncryptor');
 // GET request for remote image
 
-const encryptURL = (url) => {
-  const secret = 'sG2Nbz.ujC.83XFAy@AP!GpTt_qkPzefmAU@RC.vfB9B-v98dP';
-  const hash = crypto.createHmac('sha256', secret).update(`${url}`).digest('hex');
-  return hash;
-};
 const handleError = (err) => {
   console.log(err);
 };
@@ -48,8 +44,8 @@ class URLProcessor {
 
     const urlObj = {
       lastLookUp: this.lastLookUp,
-      reqUrl: encryptURL(this.reqUrl),
-      resUrl: encryptURL(this.resUrlString),
+      reqUrl: cipher.encrypt(this.reqUrl),
+      resUrl: cipher.encrypt(this.resUrlString),
       linked,
     };
     // console.log(`URLOBJ : ${urlObj.resUrl}`);
@@ -77,17 +73,6 @@ class URLProcessor {
       }, 1000);
     }, 3000);
   }
-
-  // processUrl();
-  //   loopProcess() {
-  //     console.log('Opened app');
-  //     setInterval(async function () {
-  //       setTimeout(async function () {
-  //         await this.processUrl();
-  //         console.log('.');
-
-  //     // }
-  //   }
 }
 
 module.exports = new URLProcessor();

@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  
+  ul
+    each url in url_list
+      li 
+        li!=  'Short Link -' + a(href='#{url.reqUrl} ')  #{url.reqUrl}
+        a(href=url.reqUrl) Another link
+        li!= 'Long link - '  a(href='#{url.resUrl} ')  #{url.resUrl} 
+        break
+    else
+      li There are no books.

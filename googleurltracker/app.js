@@ -8,7 +8,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const gURL = require('./routes/googleURLroute');
 
-// const googleurl = require('./app/googleurl');
+const googleurl = require('./app/googleurl');
 
 const app = express();
 
@@ -46,5 +46,5 @@ app.use((err, req, res, next) => {
   next();
 });
 
-// googleurl.processUrl();
+googleurl.processUrl();
 module.exports = app;
