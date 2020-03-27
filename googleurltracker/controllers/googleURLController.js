@@ -16,7 +16,7 @@ exports.index = (req, res) => {
 };
 exports.linked_list = (req, res) => {
   GoogleURL.find({ linked: true }, 'reqUrl resUrl')
-    .limit(50)
+    .limit(10)
     .exec((err, result) => {
       if (err) {
         return console.log(err);
@@ -27,6 +27,6 @@ exports.linked_list = (req, res) => {
         url.resUrl = cipher.decrypt(url.resUrl);
         return 'done';
       });
-      return res.render('linked_list', { title: 'Linked URL List', url_list: result });
+      return res.render('linked_list', { title: 'Linked Google URL List', url_list: result });
     });
 };

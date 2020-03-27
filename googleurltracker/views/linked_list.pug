@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+    br
+    h2 First 10 Links
+  br
+  ul
+    each url in url_list
+      p 
+        p Short Link:  
+          a(href=url.reqUrl) #{url.reqUrl}
+      | 
+      p 
+        p Long Link: 
+          a(href=url.resUrl) #{url.resUrl}
+      br
+      |
+    else
+      li There are no books.
