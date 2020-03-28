@@ -1,9 +1,11 @@
 extends layout
 
 block content
+  - var nextPage = pageNum + 1
+  - var prevPage = pageNum - 1
   h1= title
     br
-    h2 First 10 Links
+    h2  Links #{pageNum*10} - #{(pageNum*10)+10} 
   br
   ul
     each url in url_list
@@ -18,3 +20,8 @@ block content
       |
     else
       li There are no books.
+  p
+    if (prevPage != 0)
+      a(href=prevPage) Previous
+    |   
+    a(href=nextPage)   Next

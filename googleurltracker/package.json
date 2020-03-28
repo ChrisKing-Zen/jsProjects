@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "nodemon app.js",
     "start": "node ./bin/www",
     "lint": "./node_modules/.bin/eslint_app.js",
     "test": "mocha"
@@ -35,6 +36,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.1",
     "mocha": "^7.1.1",
+    "nodemon": "^2.0.2",
     "prettier": "^2.0.1",
     "prettier-eslint": "^9.0.1"
   }
